@@ -1,17 +1,38 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>PouchDB - Synchronisation</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <h2>Welcome to Ionic/PouchDB/MobileFirst</h2>
+  <button ion-button (click)="getDbInfo()">Infos base locale</button>
+  <button ion-button (click)="getLocalDoc()">Documents locaux</button>
+  <button ion-button icon-left>
+      <ion-icon name="arrow-up"></ion-icon>{{syncDb.push.state}}
+    </button>
+  <button ion-button ion-icon (click)="sync()">Synchronisation</button>
+  <button ion-button icon-right>
+      {{syncDb.pull.state}}
+      <ion-icon name="arrow-down"></ion-icon>
+    </button>
+  <ion-card *ngIf="dbDocs">
+    <ion-card-header>
+      {{dbDocs.total_rows}} enregistrements
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let item of dbDocs.rows">
+          <h2 ion-text color="primary">{{item.doc.title}}</h2>
+          <p>{{item.doc.comment}}</p>
+          <p ion-text color="danger">{{item.doc.category}}</p> 
+          <ion-note item-end>#{{item.id}}<br>{{item.doc.dueDate}}</ion-note>
+
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <pre>{{msg|json}}</pre>
+  <pre ion-text color="danger">{{err|json}}</pre>
+  
 </ion-content>
